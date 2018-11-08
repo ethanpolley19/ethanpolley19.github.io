@@ -33,7 +33,15 @@ function logout() {
   window.location.reload(false);
 }
 
+
+
+//1 == Rock
+//2 == paper
+//3== Scisssors
+
 function playGameComp() {
+  var playerimgs = ["rock.jpg", "paper.png", "scissors.png"];
+  var compimgs = ["rock.jpg", "paper.jpg", "scissors.jpg"];
   var select = document.getElementById("throw_choice_select");
   var playermove = select.options[select.selectedIndex].value;
 
@@ -42,12 +50,17 @@ function playGameComp() {
     document.getElementById("game_results").style.display = "block";
     document.getElementById("feedback").style.display = "none"
       //COMPUTER MOVES
-    var compmove = getRndInteger(1, 3).toString();
-
+    var compmoveint = getRndInteger(1, 3);
+    var compmove = compmoveint.toString();
     document.getElementById("player_move_text").innerHTML = getMoveString(
       playermove);
     document.getElementById("comp_move_text").innerHTML = getMoveString(
       compmove);
+
+    document.getElementById("comp_img").src = "images/comp/" + compimgs[
+      compmoveint];
+    document.getElementById("player_img").src = "images/player/" + playerimgs[
+      playermove];
 
 
     var results = determineWinner(playermove, compmove);
