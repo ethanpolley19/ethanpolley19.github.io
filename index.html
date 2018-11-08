@@ -28,7 +28,9 @@
 
   <div id="bodyall">
     <div id="header">
+      <img src="images/logo.jpg" height="100">
       <h1>Paper, Rock, Scissors</h1>
+
       <h2 id="welcome_text"></h2>
       <a class="btn btn-primary" data-toggle="collapse" href="#rulesCollapse" role="button" aria-expanded="false" aria-controls="rulesCollapse">
         Rules
@@ -36,7 +38,6 @@
       <a class="btn btn-primary" data-toggle="collapse" href="#statsCollapse" role="button" aria-expanded="false" aria-controls="statsCollapse">
         Stats
       </a>
-      <!-- <button type="button"  id="logout_button" onclick="logout()">Logout</button> -->
     </div>
 
     <div id="feedback">
@@ -51,9 +52,13 @@
             Rules
           </div>
           <div class="card-body">
-            <h5 class="card-title">Rule 2</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <h5 class="card-title">Rule 2</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Rule 1: </li>
+              <li class="list-group-item">Rule 1:</li>
+              <li class="list-group-item">Rule 1:</li>
+              <li class="list-group-item">Rule 1:</li>
+              <li class="list-group-item">Rule 1:</li>
+</ul>
           </div>
         </div>
       </div>
@@ -66,11 +71,22 @@
             Stats
           </div>
           <div class="card-body">
+            <h5 class="card-title">Total Games Played</h5>
+            <p class="card-text" id="totalgamesplayed"></p>
+            <h5 class="card-title">Player Wins</h5>
+            <p class="card-text" id="playerwinsdiv"></p>
+            <h5 class="card-title">Win-Loss Ratio</h5>
+            <p class="card-text" id="winlossratio"></p>
+            <h5 class="card-title">Player Throw Statistics</h5>
+            <p class="card-text" id="playermoves"></p>
+            <h5 class="card-title">Computer Throw Statistics</h5>
+            <p class="card-text" id="compmoves"></p>
             <h5 class="card-title">Player Outcomes</h5>
             <p class="card-text">The distribution of the outcomes for every game played.</p>
             <div class="chart-container">
               <canvas id="winChart"></canvas>
             </div>
+
 
             <h5 class="card-title">Player Moves</h5>
               <p class="card-text">The distribution of the moves made by the player.</p>
@@ -93,7 +109,7 @@
       <h1>Enter Name:</h1>
       <form id="entername_form">
         Enter Your Name To Begin: <input type="text" id="name_textfield" />
-        <input type="button" id="name_button" value="Submit" onclick="nameEntered()">
+        <input type="button" id="name_button" value="Submit" >
       </form>
     </div>
 
@@ -113,7 +129,7 @@
               <option value="2">Paper</option>
               <option value="3">Scissors</option>
             </select>
-            <input type="button" id="throw_choice_button" value="Play Game!" onclick="clickPlay()">
+            <input type="button" id="throw_choice_button" value="Play Game!" >
           </form>
         </div>
       </div>
@@ -128,7 +144,7 @@
             <div class="card-body">
               <h5 id="player_title_text" class="card-title">Player:</h5>
               <p id="player_move_text" class="card-text"></p>
-              <img src="" height="100" id="player_img">
+              <img src="" height="170" id="player_img">
             </div>
           </div>
         </div>
@@ -138,7 +154,7 @@
             <div class="card-body">
               <h5 id="comp_title_text" class="card-title">Computer:</h5>
               <p id="comp_move_text" class="card-text"></p>
-              <img src="" height="100" id="comp_img">
+              <img src="" height="170" id="comp_img">
             </div>
           </div>
         </div>
@@ -149,15 +165,28 @@
           <div class="card-body">
             <h5 class="card-title" id="resultsumtitle"></h5>
             <p class="card-text" id="resultexplanation"></p>
-            <button id="play_again_button" type="button" class="btn btn-light" id="playagainbutton" onclick="playAgainClicked()">Play Again!</button>
+            <button id="play_again_button" type="button" class="btn btn-light" >Play Again!</button>
           </div>
         </div>
       </div>
     </div>
 
   </div>
+  <footer style="margin-bottom:0%;text-align:center;">
+  <p>Created By Ethan Polley. October 2018</p>
+</footer>
 </body>
 <script type="text/javascript">
+document.getElementById("name_button").addEventListener("click", function(){
+  nameEntered();
+});
+document.getElementById("throw_choice_button").addEventListener("click", function(){
+  clickPlay();
+});
+document.getElementById("play_again_button").addEventListener("click", function(){
+  playAgainClicked();
+});
+
   var winId = document.getElementById('winChart').getContext('2d');
   var winchart = new Chart(winId, {
     // The type of chart we want to create

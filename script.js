@@ -1,10 +1,23 @@
 function nameEntered() {
   var name = document.getElementById("name_textfield").value;
-  localStorage.name = name;
-  document.getElementById("feedback").classList.remove("alert-danger");
-  document.getElementById("feedback").classList.add("alert-success");
-  document.getElementById("feedback_text").style.display = "block";
-  setUpGame(name)
+  console.log(name);
+  if (name !== "") {
+    console.log("true");
+    localStorage.name = name;
+    document.getElementById("feedback_text").classList.remove("alert-danger");
+    document.getElementById("feedback_text").classList.add("alert-success");
+    document.getElementById("feedback").style.display = "block";
+    document.getElementById("feedback_text").innerHTML =
+      "Name Successfully saved!";
+    setUpGame(name)
+  } else {
+    console.log("false");
+    document.getElementById("feedback_text").classList.add("alert-danger");
+    document.getElementById("feedback_text").classList.remove("alert-success");
+    document.getElementById("feedback").style.display = "block";
+    document.getElementById("feedback_text").innerHTML =
+      "You must enter a name to proceed!";
+  }
 }
 
 function isFirstSession() {
@@ -17,6 +30,23 @@ function isFirstSession() {
     //document.getElementById("logout_button").style.display = "block";
     setUpGame(localStorage.name)
   }
+  document.getElementById("totalgamesplayed").innerHTML = Number(localStorage.getItem(
+    "playerWins")) + Number(localStorage.getItem("playerLosses")) + Number(
+    localStorage.getItem("playerTies"));
+  document.getElementById("playerwinsdiv").innerHTML = Number(localStorage.getItem(
+    "playerWins"));
+  document.getElementById("winlossratio").innerHTML = Number(localStorage.getItem(
+    "playerWins")) + "-" + Number(localStorage.getItem(
+    "playerLosses"));
+  document.getElementById("playermoves").innerHTML = "Rock: " + Number(
+    localStorage.getItem("playerRock")) + ", Paper: " + Number(localStorage.getItem(
+    "playerPaper")) + ", Scissors: " + Number(localStorage.getItem(
+    "playerScissors"));
+
+  document.getElementById("compmoves").innerHTML = "Rock: " + Number(
+    localStorage.getItem("compRock")) + ", Paper: " + Number(localStorage.getItem(
+    "compPaper")) + ", Scissors: " + Number(localStorage.getItem(
+    "compScissors"));
 }
 
 function setUpGame(name) {
@@ -58,13 +88,10 @@ function playGameComp() {
       compmove);
 
     document.getElementById("comp_img").src = "images/comp/" + compimgs[
-      compmoveint];
-    console.log("images/comp/" + compimgs[
-      compmoveint]);
+      compmoveint - 1];
+
     document.getElementById("player_img").src = "images/player/" + playerimgs[
-      playermove];
-    console.log("images/player/" + playerimgs[
-      playermove]);
+      playermove - 1];
 
     var results = determineWinner(playermove, compmove);
 
@@ -94,6 +121,28 @@ function playGameComp() {
     select.selectedIndex = 0;
     document.getElementById("game_results").style
       .display = "block";
+
+    document.getElementById("totalgamesplayed").innerHTML = Number(localStorage
+        .getItem(
+          "playerWins")) + Number(localStorage.getItem("playerLosses")) +
+      Number(
+        localStorage.getItem("playerTies"));
+    document.getElementById("playerwinsdiv").innerHTML = Number(localStorage.getItem(
+      "playerWins"));
+    document.getElementById("winlossratio").innerHTML = Number(localStorage.getItem(
+      "playerWins")) + "-" + Number(localStorage.getItem(
+      "playerLosses"));
+    document.getElementById("playermoves").innerHTML = "Rock: " + Number(
+      localStorage.getItem("playerRock")) + ", Paper: " + Number(localStorage
+      .getItem(
+        "playerPaper")) + ", Scissors: " + Number(localStorage.getItem(
+      "playerScissors"));
+
+    document.getElementById("compmoves").innerHTML = "Rock: " + Number(
+      localStorage.getItem("compRock")) + ", Paper: " + Number(localStorage.getItem(
+      "compPaper")) + ", Scissors: " + Number(localStorage.getItem(
+      "compScissors"));
+
   } else {
     document.getElementById("game_results").style.display = "none";
     document.getElementById("feedback").style.display = "block";
@@ -253,6 +302,7 @@ function playAgainClicked() {
   document.getElementById("game_results").style.display = "none";
   document.getElementById("enter_name").style.display = "none";
   document.getElementById("throw_choice").style.display = "block";
+
 
 
 }
