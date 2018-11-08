@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Socket.IO chat</title>
+  <!-- <script src="/socket.io/socket.io.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/script.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <style>
+
+
+  #throw_choice{
+    display: none;
+    text-align: center;
+  }
+
+  #game_results{
+    display: block;
+    width: 70%;
+    margin: auto;
+  }
+  #bodyall{
+  width:75%;
+  margin: auto;
+}
+#header{
+width:75%;
+margin: auto;
+}
+  </style>
+</head>
+
+<body >
+  <div id="nav">
+    <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link active" href="index.html">Play Versus Computer</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="onlinegame.html">Play Versus Other Player</a>
+    </li>
+  </ul>
+  </div>
+
+  <div id="bodyall">
+   <div id="header">
+      <h1>Paper, Rock, Scissors</h1>
+      <h2 id="welcome_text"></h2>
+      <a  class="btn btn-primary" data-toggle="collapse" href="#rulesCollapse" role="button" aria-expanded="false" aria-controls="rulesCollapse">
+        Rules
+      </a>
+      <a  class="btn btn-primary" data-toggle="collapse" href="#statsCollapse" role="button" aria-expanded="false" aria-controls="statsCollapse">
+        Stats
+      </a>
+      <!-- <button type="button"  id="logout_button" onclick="logout()">Logout</button> -->
+    </div>
+   <div class="collapse" id="rulesCollapse">
+      <div id="rules" class="mt-3">
+        <div class="card text-center">
+          <div class="card-header">
+            Rules
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Rule 2</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <h5 class="card-title">Rule 2</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse" id="statsCollapse">
+      <div id="stats" class="mt-3">
+        <div class="card text-center">
+          <div class="card-header">
+            Stats
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Player Outcomes</h5>
+            <p class="card-text">The distribution of the outcomes for every game played.</p>
+            <div class="chart-container">
+              <canvas id="winChart"></canvas>
+            </div>
+
+            <h5 class="card-title">Player Moves</h5>
+              <p class="card-text">The distribution of the moves made by the player.</p>
+            <div class="chart-container">
+              <canvas id="playerMovesChart"></canvas>
+            </div>
+
+            <h5 class="card-title">Computer Moves</h5>
+              <p class="card-text">The distribution of the moves made by the computer.</p>
+            <div class="chart-container">
+              <canvas id="compMovesChart"></canvas>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+   <div id="throw_choice" class="mt-3" style="display: block;">
+      <div class="card text-center">
+        <div class="card-header">
+          Throw Choice
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Play Game</h5>
+          <p class="card-text">Select a move, then click "Play Game!"</p>
+          <form id="playgameform">
+            <select id="throw_choice_select">
+              <option value="null"></option>
+              <option value="1">Rock</option>
+              <option value="2">Paper</option>
+              <option value="3">Scissors</option>
+            </select>
+            <input type="button" id="throw_choice_button" value="Play Game!" >
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="waiting_for_opp_card" class="mt-3" style="display: none;">
+      <div class="card text-center">
+        <div class="card-header">
+          Waiting
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Waiting For Action</h5>
+          <p class="card-text" id="waitingforoppreason"></p>
+
+        </div>
+      </div>
+    </div>
+
+  <div id="game_results" class="mt-3" style="display: none;">
+    <h1 class="text-center">Game Results</h1>
+    <div class="card-deck">
+      <div class="card text-center">
+        <div class="result_div" id="player_result">
+          <div class="card-header" id="playercardhead"> </div>
+          <div class="card-body">
+            <h5 id="player_title_text" class="card-title">Player:</h5>
+            <p id="player_move_text" class="card-text"></p>
+          </div>
+        </div>
+      </div>
+      <div class="card text-center">
+        <div class="result_div" id="opp_result">
+          <div class="card-header" id="oppcardhead"></div>
+          <div class="card-body">
+            <h5 id="opp_title_text" class="card-title">Opponent:</h5>
+            <p id="opp_move_text" class="card-text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="result_summary" class="mt-3">
+      <div class="card text-white bg-success mb-3" id="resultsummarycard">
+        <div class="card-header">Result Summary</div>
+        <div class="card-body">
+          <h5 class="card-title" id="resultsumtitle"></h5>
+          <p class="card-text" id="resultexplanation"></p>
+          <button type="button" class="btn btn-light" id="playagainbutton" >Play Again!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script>
+    $(function() {
+      var status = "makemove";
+      var socket = io();
+
+      $('#throw_choice_button').click(function() {
+
+        socket.emit('gamePlayed', $('#throw_choice_select').val());
+
+        $('#throw_choice').css('display','none');
+
+        $('#player_move_text').text($('#throw_choice_select').val());
+
+        if($('#opp_move_text').text().length > 0){
+
+          playGameOnline($('#player_move_text').text(),$('#opp_move_text').text());
+          status = "gamePlayed";
+
+        }
+
+        else{
+          $('#waitingforoppreason').text('Your opponent must play before you continue!');
+          $('#waiting_for_opp_card').css('display','block');
+
+          status = "waitingforoppmove";
+
+        }
+
+        return false;
+      });
+
+      socket.on('gamePlayed', function(msg) {
+
+        console.log(msg);
+
+        $('#opp_move_text').text(msg);
+
+        if($('#player_move_text').text().length > 0){
+
+          playGameOnline($('#player_move_text').text(),$('#opp_move_text').text());
+
+        }
+
+        else{
+          $('#waitingforoppreason').text('Your opponent is waiting for you to Move!');
+          $('#waiting_for_opp_card').css('display','block');
+          status = "oppwaitingformove";
+        }
+      });
+
+      $('#playagainbutton').click(function() {
+         socket.emit('readyToPlay');
+         if(status =='opponentReadyToPlay'){
+          $('#throw_choice').css('display','block');
+          $('#game_results').css('display','none');
+          $('#player_move_text').text("");
+          $('#opp_move_text').text("");
+          $('#waiting_for_opp_card').css('display','none');
+          status = 'makemove';
+         }
+         else{
+          status = "preadytoplay";
+          $('#game_results').css('display','none');
+          $('#player_move_text').text("");
+          $('#opp_move_text').text("");
+          $('#waitingforoppreason').text('Your Opponent must click play again!');
+          $('#waiting_for_opp_card').css('display','block');
+         }
+
+      });
+
+
+      socket.on('readyToPlay', function() {
+        if(status == 'preadytoplay'){
+         $('#game_results').css('display','none');
+         $('#throw_choice').css('display','block');
+         $('#player_move_text').text("");
+         $('#opp_move_text').text("");
+         $('#waiting_for_opp_card').css('display','none');
+         status = 'makemove';
+       }
+       else{
+        status = 'opponentReadyToPlay';
+        $('#waitingforoppreason').text('Your Opponent is ready to play again. Click Play Again to continue!');
+        $('#waiting_for_opp_card').css('display','block');
+       }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

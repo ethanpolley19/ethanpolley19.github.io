@@ -1,0 +1,43 @@
+#header{
+  text-align: center;
+
+}
+
+#feedback{
+  display: none;
+  text-align: center;
+}
+
+#bodyall{
+  width:75%;
+  margin: auto;
+}
+
+#rules{
+  margin: auto;
+}
+#stats{
+  display: none;
+  text-align: center;
+}
+
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 25%;
+  width: 25%;
+}
+
+#enter_name{
+  display: block;
+  text-align: center;
+}
+
+#throw_choice{
+  display: none;
+  text-align: center;
+}
+
+#game_results{
+  display: none;
+}
