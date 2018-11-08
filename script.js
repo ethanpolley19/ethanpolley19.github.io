@@ -59,9 +59,12 @@ function playGameComp() {
 
     document.getElementById("comp_img").src = "images/comp/" + compimgs[
       compmoveint];
+    console.log("images/comp/" + compimgs[
+      compmoveint]);
     document.getElementById("player_img").src = "images/player/" + playerimgs[
       playermove];
-
+    console.log("images/player/" + playerimgs[
+      playermove]);
 
     var results = determineWinner(playermove, compmove);
 
@@ -89,6 +92,8 @@ function playGameComp() {
         "card text-white bg-warning mb-3";
     }
     select.selectedIndex = 0;
+    document.getElementById("game_results").style
+      .display = "block";
   } else {
     document.getElementById("game_results").style.display = "none";
     document.getElementById("feedback").style.display = "block";
@@ -142,7 +147,7 @@ function playGameOnline(playermove, compmove) {
     document.getElementById("feedback_text").innerHTML =
       "You must select a move in order to play";
   }
-  document.getElementById("game_results").style.display = "block";
+
 
 }
 
