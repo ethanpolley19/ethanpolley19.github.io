@@ -47,7 +47,7 @@ function playGameComp() {
 
   if (playermove != "null") {
     //SHOW GAME RESULTS DIVS
-    document.getElementById("game_results").style.display = "block";
+
     document.getElementById("feedback").style.display = "none"
       //COMPUTER MOVES
     var compmoveint = getRndInteger(1, 3);
@@ -142,7 +142,7 @@ function playGameOnline(playermove, compmove) {
     document.getElementById("feedback_text").innerHTML =
       "You must select a move in order to play";
   }
-
+  document.getElementById("game_results").style.display = "block";
 
 }
 
