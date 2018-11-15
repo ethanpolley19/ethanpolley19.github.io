@@ -25,9 +25,9 @@
 		<script>
 		var scene = new THREE.Scene();
 		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-		console.log("test");
+		console.log("test1");
 		var renderer = new THREE.WebGLRenderer();
-		console.log("test");
+		console.log("test2");
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 		var loader = new THREE.GLTFLoader();
@@ -35,20 +35,20 @@
 		loader.load( 'model.glb', function ( gltf ) {
 
 			scene.add( gltf.scene );
-			console.log("test");
+			console.log("test3");
 
 		}, undefined, function ( error ) {
 
 			console.error( error );
 
 		} );
-		console.log("test");
+		console.log("test4");
 		function animate() {
 			requestAnimationFrame( animate );
 			renderer.render( scene, camera );
-			console.log("test");
+			console.log("test5");
 		}
-		console.log("test");
+		console.log("test6");
 		animate();
 
 		</script>
